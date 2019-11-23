@@ -3,13 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/google-map-react": "^1.1.0",
     "@types/jest": "24.0.18",
+    "@types/lodash": "^4.14.144",
     "@types/node": "12.7.11",
     "@types/react": "^16.9.5",
     "@types/react-dom": "16.9.1",
     "@types/react-router-dom": "^5.1.0",
     "@types/redux-logger": "^3.0.7",
+    "axios": "^0.19.0",
     "connected-react-router": "^6.5.2",
+    "dayjs": "^1.8.16",
+    "google-map-react": "^1.1.5",
+    "immer": "^4.0.1",
+    "lodash": "^4.17.15",
+    "lottie-web": "^5.5.10",
+    "office-ui-fabric-react": "^7.48.1",
+    "re-resizable": "^6.1.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-redux": "^7.1.1",
@@ -45,6 +55,12 @@
     ]
   },
   "devDependencies": {
-    "@types/react-redux": "^7.1.4"
+    "@types/google-maps": "^3.2.1",
+    "@types/react-redux": "^7.1.4",
+    "@types/recompose": "^0.30.7",
+    "google-maps": "^3.3.0",
+    "node-sass": "^4.12.0",
+    "react-google-maps": "^9.4.5",
+    "recompose": "^0.30.0"
   }
 }

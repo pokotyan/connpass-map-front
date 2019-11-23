@@ -1,0 +1,35 @@
+$small: 740px;
+$medium: 1024px;
+$large: 1100px;
+
+.container {
+  background-color: #263238;
+
+  .mapContainer {
+    display: flex;
+
+    .map {
+      width: 50vw;
+    }
+
+    .list {
+      width: 50vw;
+    }
+  }
+
+  @media (max-width: $small) {
+    .mapContainer {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+
+      .map {
+        width: 100vw;
+      }
+
+      .list {
+        width: 100vw;
+      }
+    }
+  }
+}

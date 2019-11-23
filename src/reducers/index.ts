@@ -1,15 +1,18 @@
 import { combineReducers } from "redux";
 import { connectRouter } from "connected-react-router";
 import { History } from "history";
-import hoge, { initialState as hogeState } from "./hoge";
+import connpass, { initialState as connpassState } from "./connpass";
+import ui, { initialState as uiState } from "./ui";
 
 export type AppState = {
   router: any;
-  hoge: typeof hogeState;
+  connpass: typeof connpassState;
+  ui: typeof uiState;
 };
 
 export const createRootReducer = (history: History) =>
   combineReducers<AppState>({
     router: connectRouter(history),
-    hoge
+    connpass,
+    ui
   });

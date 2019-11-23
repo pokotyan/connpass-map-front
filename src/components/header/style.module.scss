@@ -1,0 +1,16 @@
+.header {
+  height: 50px;
+  display: flex;
+  position: relative;
+  background-color: #69f0ae;
+}
+
+.signIn {
+  position: absolute;
+  top: 13px;
+  right: 10px;
+
+  .signInText {
+    cursor: pointer;
+  }
+}

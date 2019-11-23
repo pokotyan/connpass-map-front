@@ -1,0 +1,36 @@
+$small: 740px;
+$medium: 1024px;
+$large: 1100px;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  display: flex;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  .search {
+    button {
+      background-color: #fff8e1;
+    }
+  }
+
+  i {
+    color: #263238;
+  }
+
+  .result {
+    color: #fff8e1;
+    line-height: 2;
+    margin-left: 10px;
+  }
+
+  @media (max-width: $small) {
+    .result {
+      display: none;
+    }
+  }
+}

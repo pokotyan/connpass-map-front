@@ -1,6 +1,6 @@
 import { all, fork } from "redux-saga/effects";
-import hoge from "./hoge";
+import connpass from "./connpass";
 
 export function* rootSaga() {
-  yield all([fork(hoge)]);
+  yield all([fork(connpass)]);
 }

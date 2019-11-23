@@ -6,7 +6,7 @@ export default () => {
 
   return (
     <>
-      <button onClick={() => history.push("/hoge")}>hogeへ移動</button>
+      <button onClick={() => history.push("/search")}>/searchへ移動</button>
     </>
   );
 };

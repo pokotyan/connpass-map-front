@@ -1,0 +1,21 @@
+.pagenate {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+
+  .cursor {
+    cursor: pointer;
+  }
+
+  .count {
+    cursor: pointer;
+    color: #fff8e1;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .active {
+    color: #69f0ae;
+  }
+}

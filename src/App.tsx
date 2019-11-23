@@ -1,19 +1,25 @@
 import * as React from "react";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
+import { initializeIcons } from "@uifabric/icons";
+import { AppState } from "../src/reducers";
+import Loading from "../src/components/loading";
+import { Header } from "../src/components/header";
 import Router from "./router";
 import store, { history } from "./store";
 
-class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <Router />
-        </ConnectedRouter>
-      </Provider>
-    );
-  }
-}
+initializeIcons();
 
-export default App;
+export default () => {
+  const uiState = useSelector((state: AppState) => state.ui);
+
+  return (
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <Loading isLoading={uiState.isLoading} />
+        <Header />
+        <Router />
+      </ConnectedRouter>
+    </Provider>
+  );
+};
