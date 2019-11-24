@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
+import * as _ from "lodash";
 import * as connpassActions from "../../../actions/connpass";
 import dayjs from "dayjs";
 import {
@@ -23,6 +24,7 @@ import { AppState } from "../../../reducers";
 import { Event, getEventsList } from "../../../domain/connpass";
 import styles from "./style.module.scss";
 import { useWindowDimensions } from "../../../utils/hooks";
+import { useState } from "react";
 
 interface IStyles {
   root: IStyle;
@@ -63,10 +65,16 @@ const clickMarker = (eventId: null | number, dispatch: Dispatch<any>) => {
 const getColumns = ({
   eventId,
   dispatch,
+  events,
+  sort,
+  setSort,
   width
 }: {
   eventId: null | number;
   dispatch: Dispatch<any>;
+  events: Event[];
+  sort: string;
+  setSort: React.Dispatch<React.SetStateAction<string>>;
   width: number;
 }): IColumn[] => [
   {
@@ -156,11 +164,14 @@ const getColumns = ({
   {
     key: "参加者",
     name: "参加者",
-    minWidth: 50,
-    maxWidth: 50,
+    minWidth: 60,
+    maxWidth: 60,
     isResizable: true,
     isCollapsible: true,
     data: "string",
+    isSorted: sort === "asc" || sort === "desc",
+    isSortedDescending: sort === "asc",
+    onColumnClick: sortByNumberOfPeople({ dispatch, events, sort, setSort }),
     onRender: (event: Event) => {
       return (
         <TooltipHost
@@ -203,6 +214,34 @@ const getColumns = ({
   }
 ];
 
+const sortByNumberOfPeople = ({
+  dispatch,
+  events,
+  sort,
+  setSort
+}: {
+  dispatch: Dispatch<any>;
+  events: Event[];
+  sort: any;
+  setSort: any;
+}) => (ev: React.MouseEvent<HTMLElement>, column: IColumn) => {
+  if (column.key !== "参加者") {
+    return;
+  }
+
+  dispatch(
+    connpassActions.setEvents({
+      events: _.orderBy(events, "accepted", sort)
+    })
+  );
+
+  if (sort === "" || sort === "asc") {
+    setSort("desc");
+  } else {
+    setSort("asc");
+  }
+};
+
 export default () => {
   const getClassNames = classNamesFunction<{}, IStyles>();
   const classNames = getClassNames(getStyles);
@@ -212,10 +251,20 @@ export default () => {
 
   const { width } = useWindowDimensions();
 
-  const dispatch = useDispatch();
-  const columns = getColumns({ eventId: currentModalEventId, dispatch, width });
   const events = useSelector((state: AppState) => state.connpass.events);
   const eventsList = getEventsList(events);
+
+  const [sort, setSort] = useState("");
+
+  const dispatch = useDispatch();
+  const columns = getColumns({
+    eventId: currentModalEventId,
+    dispatch,
+    events,
+    sort,
+    setSort,
+    width
+  });
 
   return (
     <>
