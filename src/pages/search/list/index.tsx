@@ -1,5 +1,7 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { Dispatch } from "redux";
+import { useDispatch, useSelector } from "react-redux";
+import * as connpassActions from "../../../actions/connpass";
 import dayjs from "dayjs";
 import {
   IDetailsListStyles,
@@ -42,17 +44,31 @@ const getStyles = (): Partial<IStyles> => ({
   }
 });
 
-const clickMarker = (eventId: null | number) => {
+const clickMarker = (eventId: null | number, dispatch: Dispatch<any>) => {
   if (!eventId) {
     return;
   }
+
+  dispatch(
+    connpassActions.setCurrentEventId({
+      eventId
+    })
+  );
 
   const marker = document.getElementById(`${eventId}`);
 
   marker!.click();
 };
 
-const getColumns = (eventId: null | number, width: number): IColumn[] => [
+const getColumns = ({
+  eventId,
+  dispatch,
+  width
+}: {
+  eventId: null | number;
+  dispatch: Dispatch<any>;
+  width: number;
+}): IColumn[] => [
   {
     key: "Title",
     name: "Title",
@@ -69,8 +85,10 @@ const getColumns = (eventId: null | number, width: number): IColumn[] => [
           styles={{ root: { display: "inline-block" } }}
         >
           <span
-            className={`${eventId === event.event_id ? styles.active : ""}`}
-            onClick={() => clickMarker(event.event_id)}
+            className={`${styles.cursor} ${
+              eventId === event.event_id ? styles.active : ""
+            }`}
+            onClick={() => clickMarker(event.event_id, dispatch)}
           >
             {event.title}
           </span>
@@ -97,8 +115,10 @@ const getColumns = (eventId: null | number, width: number): IColumn[] => [
           styles={{ root: { display: "inline-block" } }}
         >
           <span
-            className={`${eventId === event.event_id ? styles.active : ""}`}
-            onClick={() => clickMarker(event.event_id)}
+            className={`${styles.cursor} ${
+              eventId === event.event_id ? styles.active : ""
+            }`}
+            onClick={() => clickMarker(event.event_id, dispatch)}
           >
             {date} ~
           </span>
@@ -122,8 +142,10 @@ const getColumns = (eventId: null | number, width: number): IColumn[] => [
           styles={{ root: { display: "inline-block" } }}
         >
           <span
-            className={`${eventId === event.event_id ? styles.active : ""}`}
-            onClick={() => clickMarker(event.event_id)}
+            className={`${styles.cursor} ${
+              eventId === event.event_id ? styles.active : ""
+            }`}
+            onClick={() => clickMarker(event.event_id, dispatch)}
           >
             {event.address}
           </span>
@@ -147,8 +169,10 @@ const getColumns = (eventId: null | number, width: number): IColumn[] => [
           styles={{ root: { display: "inline-block" } }}
         >
           <span
-            className={`${eventId === event.event_id ? styles.active : ""}`}
-            onClick={() => clickMarker(event.event_id)}
+            className={`${styles.cursor} ${
+              eventId === event.event_id ? styles.active : ""
+            }`}
+            onClick={() => clickMarker(event.event_id, dispatch)}
           >
             {`${event.accepted}/${event.limit}`}
           </span>
@@ -188,7 +212,8 @@ export default () => {
 
   const { width } = useWindowDimensions();
 
-  const columns = getColumns(currentModalEventId, width);
+  const dispatch = useDispatch();
+  const columns = getColumns({ eventId: currentModalEventId, dispatch, width });
   const events = useSelector((state: AppState) => state.connpass.events);
   const eventsList = getEventsList(events);
 

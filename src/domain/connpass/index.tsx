@@ -26,7 +26,7 @@ export type Event = {
   catch: string;
   accepted: number;
   place: string;
-  isOpen?: boolean;
+  is_visible: boolean;
 };
 
 export const getEventsList = (events: Event[]) => {

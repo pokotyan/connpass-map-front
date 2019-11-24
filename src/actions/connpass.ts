@@ -27,7 +27,13 @@ export const setCurrentEventId = actionCreator<{ eventId: null | number }>(
 export const SET_CURSOR = "SET_CURSOR";
 export const setCursor = actionCreator<{ cursor: number }>(SET_CURSOR);
 
-export const SET_IS_MONOCHROME = "SET_IS_MONOCHROME";
-export const setIsMonochrome = actionCreator<{ isMonochrome: boolean }>(
-  SET_IS_MONOCHROME
+export const SET_IS_DETAIL_CARD_IS_VISIBLE = "SET_IS_DETAIL_CARD_IS_VISIBLE";
+export const setIsDetailCardVisible = actionCreator<{ eventId: number }>(
+  SET_IS_DETAIL_CARD_IS_VISIBLE
+);
+
+export const RESET_IS_DETAIL_CARD_IS_VISIBLE =
+  "RESET_IS_DETAIL_CARD_IS_VISIBLE";
+export const resetIsDetailCardVisible = actionCreator(
+  RESET_IS_DETAIL_CARD_IS_VISIBLE
 );

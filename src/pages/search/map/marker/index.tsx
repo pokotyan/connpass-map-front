@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { Event, getEventsList } from "../../../../domain/connpass";
@@ -11,13 +10,11 @@ import { Marker, InfoWindow } from "react-google-maps";
 const toVisible = ({
   event,
   eventsList,
-  dispatch,
-  setIsDetailCardVisible
+  dispatch
 }: {
   event: Event;
   eventsList: Event[][];
   dispatch: Dispatch<any>;
-  setIsDetailCardVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   dispatch(
     connpassActions.setCurrentEventId({
@@ -35,46 +32,35 @@ const toVisible = ({
     })
   );
 
-  setIsDetailCardVisible(true);
+  dispatch(
+    connpassActions.setIsDetailCardVisible({
+      eventId: event.event_id
+    })
+  );
 };
 
-const toUnVisible = ({
-  dispatch,
-  setIsDetailCardVisible
-}: {
-  dispatch: Dispatch<any>;
-  setIsDetailCardVisible: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const toUnVisible = ({ dispatch }: { dispatch: Dispatch<any> }) => {
   dispatch(
     connpassActions.setCurrentEventId({
       eventId: null
     })
   );
-  setIsDetailCardVisible(false);
+  dispatch(connpassActions.resetIsDetailCardVisible());
 };
 
 export default ({ event }: { event: Event }) => {
   const dispatch = useDispatch();
-  const [isDetailCardVisible, setIsDetailCardVisible] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const events = useSelector((state: AppState) => state.connpass.events);
   const eventsList = getEventsList(events);
 
   const handleClick = () => {
-    setIsOpen(!isOpen);
-
-    if (!isDetailCardVisible) {
+    if (!event.is_visible) {
       return toVisible({
         event,
         eventsList,
-        dispatch,
-        setIsDetailCardVisible
+        dispatch
       });
     }
-    toUnVisible({
-      dispatch,
-      setIsDetailCardVisible
-    });
   };
 
   return (
@@ -87,12 +73,13 @@ export default ({ event }: { event: Event }) => {
         }}
         onClick={() => handleClick()}
       >
-        {isOpen ? (
+        {event.is_visible ? (
           <InfoWindow
             key={event.event_id}
             onCloseClick={() => {
-              setIsDetailCardVisible(false);
-              setIsOpen(false);
+              toUnVisible({
+                dispatch
+              });
             }}
           >
             <div className={styles.card}>

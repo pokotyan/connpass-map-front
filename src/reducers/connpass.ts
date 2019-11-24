@@ -50,9 +50,4 @@ export default reducerWithInitialState(initialState)
     return produce(state, draftState => {
       draftState.cursor = cursor;
     });
-  })
-  .case(connpassActions.setIsMonochrome, (state, { isMonochrome }) => {
-    return produce(state, draftState => {
-      draftState.isMonochrome = isMonochrome;
-    });
   });
