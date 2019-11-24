@@ -1,11 +1,18 @@
 import * as React from "react";
 import styles from "./style.module.scss";
+import logo from "../../logo.png";
+import title from "../../connpass-map-logo.png";
 
 export const Header = () => {
   return (
     <div className={styles.header}>
-      右の検索リストをクリックしたら、マップの方の詳細ダイアログが開くようにする。
-      <div className={styles.signIn}>
+      <div className={styles.logoBox}>
+        <img className={styles.img} src={logo} alt="" />
+      </div>
+      <div className={styles.titleBox}>
+        <img className={styles.img} src={title} alt="" />
+      </div>
+      {/* <div className={styles.signIn}>
         <div
           className={styles.signInText}
           onClick={() => {
@@ -14,7 +21,7 @@ export const Header = () => {
         >
           サインイン
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

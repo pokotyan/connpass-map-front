@@ -3,6 +3,24 @@
   display: flex;
   position: relative;
   background-color: #69f0ae;
+
+  .logoBox {
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+  }
+
+  .titleBox {
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    padding-top: 4px;
+  }
+
+  .img {
+    width: auto;
+    height: 20px;
+  }
 }
 
 .signIn {

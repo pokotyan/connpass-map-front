@@ -60,48 +60,52 @@ export default ({ event }: { event: Event }) => {
   const events = useSelector((state: AppState) => state.connpass.events);
   const eventsList = getEventsList(events);
 
-  return (
-    <Marker
-      key={event.event_id}
-      position={{
-        lat: parseFloat(event.lat),
-        lng: parseFloat(event.lon)
-      }}
-      onClick={() => {
-        setIsOpen(!isOpen);
+  const handleClick = () => {
+    setIsOpen(!isOpen);
 
-        if (!isDetailCardVisible) {
-          return toVisible({
-            event,
-            eventsList,
-            dispatch,
-            setIsDetailCardVisible
-          });
-        }
-        toUnVisible({
-          dispatch,
-          setIsDetailCardVisible
-        });
-      }}
-    >
-      {isOpen ? (
-        <InfoWindow
-          key={event.event_id}
-          onCloseClick={() => {
-            setIsDetailCardVisible(false);
-            setIsOpen(false);
-          }}
-        >
-          <div className={styles.card}>
-            <div className={styles.title}>{event.title}</div>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: event.description
-              }}
-            />
-          </div>
-        </InfoWindow>
-      ) : null}
-    </Marker>
+    if (!isDetailCardVisible) {
+      return toVisible({
+        event,
+        eventsList,
+        dispatch,
+        setIsDetailCardVisible
+      });
+    }
+    toUnVisible({
+      dispatch,
+      setIsDetailCardVisible
+    });
+  };
+
+  return (
+    <div id={`${event.event_id}`} onClick={() => handleClick()}>
+      <Marker
+        key={event.event_id}
+        position={{
+          lat: parseFloat(event.lat),
+          lng: parseFloat(event.lon)
+        }}
+        onClick={() => handleClick()}
+      >
+        {isOpen ? (
+          <InfoWindow
+            key={event.event_id}
+            onCloseClick={() => {
+              setIsDetailCardVisible(false);
+              setIsOpen(false);
+            }}
+          >
+            <div className={styles.card}>
+              <div className={styles.title}>{event.title}</div>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: event.description
+                }}
+              />
+            </div>
+          </InfoWindow>
+        ) : null}
+      </Marker>
+    </div>
   );
 };

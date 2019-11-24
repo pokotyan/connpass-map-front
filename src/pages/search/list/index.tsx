@@ -42,6 +42,16 @@ const getStyles = (): Partial<IStyles> => ({
   }
 });
 
+const clickMarker = (eventId: null | number) => {
+  if (!eventId) {
+    return;
+  }
+
+  const marker = document.getElementById(`${eventId}`);
+
+  marker!.click();
+};
+
 const getColumns = (eventId: null | number, width: number): IColumn[] => [
   {
     key: "Title",
@@ -60,6 +70,7 @@ const getColumns = (eventId: null | number, width: number): IColumn[] => [
         >
           <span
             className={`${eventId === event.event_id ? styles.active : ""}`}
+            onClick={() => clickMarker(event.event_id)}
           >
             {event.title}
           </span>
@@ -87,6 +98,7 @@ const getColumns = (eventId: null | number, width: number): IColumn[] => [
         >
           <span
             className={`${eventId === event.event_id ? styles.active : ""}`}
+            onClick={() => clickMarker(event.event_id)}
           >
             {date} ~
           </span>
@@ -111,8 +123,34 @@ const getColumns = (eventId: null | number, width: number): IColumn[] => [
         >
           <span
             className={`${eventId === event.event_id ? styles.active : ""}`}
+            onClick={() => clickMarker(event.event_id)}
           >
             {event.address}
+          </span>
+        </TooltipHost>
+      );
+    }
+  },
+  {
+    key: "参加者",
+    name: "参加者",
+    minWidth: 50,
+    maxWidth: 50,
+    isResizable: true,
+    isCollapsible: true,
+    data: "string",
+    onRender: (event: Event) => {
+      return (
+        <TooltipHost
+          content={`${event.accepted}/${event.limit}`}
+          calloutProps={{ gapSpace: 0 }}
+          styles={{ root: { display: "inline-block" } }}
+        >
+          <span
+            className={`${eventId === event.event_id ? styles.active : ""}`}
+            onClick={() => clickMarker(event.event_id)}
+          >
+            {`${event.accepted}/${event.limit}`}
           </span>
         </TooltipHost>
       );
