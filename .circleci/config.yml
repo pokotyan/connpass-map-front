@@ -1,0 +1,54 @@
+version: 2.1
+orbs:
+  aws-s3: circleci/aws-s3@1.0.11
+executors:
+  default:
+    docker:
+      - image: circleci/node:12
+    working_directory: ~/repo
+commands:
+  npm_install:
+    steps:
+      - restore_cache:
+          keys:
+            - v2-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v2-dependencies-{{ checksum "package.json" }}
+jobs:
+  build:
+    executor: default
+    steps:
+      - checkout
+      - npm_install
+      - run: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - "*"
+            - ".*"
+  deploy:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - aws-s3/sync:
+          from: build
+          to: s3://connpass-map-front
+          overwrite: true
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - /feature.*/
+                - master

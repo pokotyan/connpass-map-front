@@ -21,7 +21,7 @@ export default () => {
     );
 
     dispatch(connpassActions.search());
-  }, []);
+  });
 
   return (
     <div className={styles.header}>
