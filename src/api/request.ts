@@ -28,6 +28,7 @@ const request = (method: string) => async (...args: axiosParams) => {
   let url = args.shift();
 
   const res = await (axiosInstance as ExtendAxios)
+    // eslint-disable-next-line no-unexpected-multiline
     [method](url, ...args)
     .finally(closeRequest);
 
