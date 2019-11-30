@@ -37,7 +37,7 @@ jobs:
           at: ~/repo
       - aws-s3/sync:
           from: build
-          to: s3://engine-deploy-ap-northeast-1-486094815342
+          to: s3://connpass-map-front
           overwrite: true
 workflows:
   version: 2
