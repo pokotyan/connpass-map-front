@@ -21,7 +21,8 @@ export default () => {
     );
 
     dispatch(connpassActions.search());
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={styles.header}>
