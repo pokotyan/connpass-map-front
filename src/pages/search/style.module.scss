@@ -4,11 +4,13 @@ $large: 1100px;
 
 .container {
   background-color: #263238;
+  height: calc(100vh - 50px);
 
   .mapContainer {
     display: flex;
 
     .map {
+      height: calc(100vh - 50px - 64px);
       width: 50vw;
     }
 
@@ -29,6 +31,7 @@ $large: 1100px;
 
       .list {
         width: 100vw;
+        background-color: #263238;
       }
     }
   }
