@@ -37,7 +37,7 @@ jobs:
           at: ~/repo
       - aws-s3/sync:
           from: build
-          to: s3://connpass-map-front
+          to: s3://aaaaaaaaaaa-bucket
           overwrite: true
 workflows:
   version: 2
