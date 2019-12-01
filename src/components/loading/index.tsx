@@ -27,7 +27,7 @@ const Loading = ({ isLoading }: { isLoading: boolean }) => {
         <div className={style.loadingBox}>
           <div className={style.boxInner}>
             <div className={style.boxBg}>
-              <div ref={ref} />
+              <div className={style.spinner} ref={ref} />
             </div>
           </div>
         </div>
