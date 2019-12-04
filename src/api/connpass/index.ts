@@ -7,7 +7,8 @@ export const getEvent = async ({
   keyword: string;
   ymdList: number[];
 }) => {
-  const res = await request.post("http://localhost/api/connpass/event", {
+  const res = await request.post("https://connpass.net/api/connpass/event", {
+    // const res = await request.post("http://localhost/api/connpass/event", {
     Keyword: keyword,
     YmdList: ymdList
   });
