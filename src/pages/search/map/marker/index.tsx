@@ -81,9 +81,6 @@ export default ({ event }: { event: Event }) => {
                 dispatch
               });
             }}
-            options={{
-              maxWidth: 300
-            }}
           >
             <div className={styles.card}>
               <div className={styles.title}>{event.title}</div>
