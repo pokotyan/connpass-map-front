@@ -76,143 +76,235 @@ const getColumns = ({
   sort: string;
   setSort: React.Dispatch<React.SetStateAction<string>>;
   width: number;
-}): IColumn[] => [
-  {
-    key: "Title",
-    name: "Title",
-    minWidth: 10,
-    maxWidth: width < 740 ? 100 : 300,
-    isRowHeader: true,
-    isResizable: true,
-    data: "string",
-    onRender: (event: Event) => {
-      return (
-        <TooltipHost
-          content={event.title}
-          calloutProps={{ gapSpace: 0 }}
-          styles={{ root: { display: "inline-block" } }}
-        >
-          <span
-            className={`${styles.cursor} ${
-              eventId === event.event_id ? styles.active : ""
-            }`}
-            onClick={() => clickMarker(event.event_id, dispatch)}
+}): IColumn[] => {
+  const pcColumns = [
+    {
+      key: "Title",
+      name: "Title",
+      minWidth: 10,
+      maxWidth: 300,
+      isRowHeader: true,
+      isResizable: true,
+      data: "string",
+      onRender: (event: Event) => {
+        return (
+          <TooltipHost
+            content={event.title}
+            calloutProps={{ gapSpace: 0 }}
+            styles={{ root: { display: "inline-block" } }}
           >
-            {event.title}
-          </span>
-        </TooltipHost>
-      );
+            <span
+              className={`${styles.cursor} ${
+                eventId === event.event_id ? styles.active : ""
+              }`}
+              onClick={() => clickMarker(event.event_id, dispatch)}
+            >
+              {event.title}
+            </span>
+          </TooltipHost>
+        );
+      },
+      isPadded: true
     },
-    isPadded: true
-  },
-  {
-    key: "日付",
-    name: "日付",
-    minWidth: 10,
-    maxWidth: 100,
-    isResizable: true,
-    isCollapsible: true,
-    data: "string",
-    onRender: (event: Event) => {
-      const date = dayjs(event.started_at).format("YYYY-MM-DD HH:mm");
+    {
+      key: "日付",
+      name: "日付",
+      minWidth: 10,
+      maxWidth: 100,
+      isResizable: true,
+      isCollapsible: true,
+      data: "string",
+      onRender: (event: Event) => {
+        const date = dayjs(event.started_at).format("YYYY-MM-DD HH:mm");
 
-      return (
-        <TooltipHost
-          content={`${date} ~`}
-          calloutProps={{ gapSpace: 0 }}
-          styles={{ root: { display: "inline-block" } }}
-        >
-          <span
-            className={`${styles.cursor} ${
-              eventId === event.event_id ? styles.active : ""
-            }`}
-            onClick={() => clickMarker(event.event_id, dispatch)}
+        return (
+          <TooltipHost
+            content={`${date} ~`}
+            calloutProps={{ gapSpace: 0 }}
+            styles={{ root: { display: "inline-block" } }}
           >
-            {date} ~
-          </span>
-        </TooltipHost>
-      );
-    }
-  },
-  {
-    key: "場所",
-    name: "場所",
-    minWidth: 20,
-    maxWidth: 200,
-    isResizable: true,
-    isCollapsible: true,
-    data: "string",
-    onRender: (event: Event) => {
-      return (
-        <TooltipHost
-          content={event.address}
-          calloutProps={{ gapSpace: 0 }}
-          styles={{ root: { display: "inline-block" } }}
-        >
-          <span
-            className={`${styles.cursor} ${
-              eventId === event.event_id ? styles.active : ""
-            }`}
-            onClick={() => clickMarker(event.event_id, dispatch)}
+            <span
+              className={`${styles.cursor} ${
+                eventId === event.event_id ? styles.active : ""
+              }`}
+              onClick={() => clickMarker(event.event_id, dispatch)}
+            >
+              {date} ~
+            </span>
+          </TooltipHost>
+        );
+      }
+    },
+    {
+      key: "場所",
+      name: "場所",
+      minWidth: 20,
+      maxWidth: 50,
+      isResizable: true,
+      isCollapsible: true,
+      data: "string",
+      onRender: (event: Event) => {
+        return (
+          <TooltipHost
+            content={event.address}
+            calloutProps={{ gapSpace: 0 }}
+            styles={{ root: { display: "inline-block" } }}
           >
-            {event.address}
-          </span>
-        </TooltipHost>
-      );
-    }
-  },
-  {
-    key: "参加者",
-    name: "参加者",
-    minWidth: 60,
-    maxWidth: 60,
-    isResizable: true,
-    isCollapsible: true,
-    data: "string",
-    isSorted: sort === "asc" || sort === "desc",
-    isSortedDescending: sort === "asc",
-    onColumnClick: sortByNumberOfPeople({ dispatch, events, sort, setSort }),
-    onRender: (event: Event) => {
-      return (
-        <TooltipHost
-          content={`${event.accepted}/${event.limit}`}
-          calloutProps={{ gapSpace: 0 }}
-          styles={{ root: { display: "inline-block" } }}
-        >
-          <span
-            className={`${styles.cursor} ${
-              eventId === event.event_id ? styles.active : ""
-            }`}
-            onClick={() => clickMarker(event.event_id, dispatch)}
+            <span
+              className={`${styles.cursor} ${
+                eventId === event.event_id ? styles.active : ""
+              }`}
+              onClick={() => clickMarker(event.event_id, dispatch)}
+            >
+              {event.address}
+            </span>
+          </TooltipHost>
+        );
+      }
+    },
+    {
+      key: "参加者",
+      name: "参加者",
+      minWidth: 60,
+      maxWidth: 60,
+      isResizable: true,
+      isCollapsible: true,
+      data: "string",
+      isSorted: sort === "asc" || sort === "desc",
+      isSortedDescending: sort === "asc",
+      onColumnClick: sortByNumberOfPeople({ dispatch, events, sort, setSort }),
+      onRender: (event: Event) => {
+        return (
+          <TooltipHost
+            content={`${event.accepted}/${event.limit}`}
+            calloutProps={{ gapSpace: 0 }}
+            styles={{ root: { display: "inline-block" } }}
           >
-            {`${event.accepted}/${event.limit}`}
-          </span>
-        </TooltipHost>
-      );
+            <span
+              className={`${styles.cursor} ${
+                eventId === event.event_id ? styles.active : ""
+              }`}
+              onClick={() => clickMarker(event.event_id, dispatch)}
+            >
+              {`${event.accepted}/${event.limit}`}
+            </span>
+          </TooltipHost>
+        );
+      }
+    },
+    {
+      key: "詳細",
+      name: "詳細",
+      minWidth: 30,
+      maxWidth: 30,
+      isResizable: true,
+      isCollapsible: true,
+      data: "string",
+      onRender: (event: Event) => {
+        return (
+          <a
+            style={{ outline: 0 }}
+            href={event.event_url}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <Icon iconName="OpenInNewTab" color="#69f0ae" />
+          </a>
+        );
+      }
     }
-  },
-  {
-    key: "詳細",
-    name: "詳細",
-    minWidth: 30,
-    maxWidth: 30,
-    isResizable: true,
-    isCollapsible: true,
-    data: "string",
-    onRender: (event: Event) => {
-      return (
-        <a
-          style={{ outline: 0 }}
-          href={event.event_url}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <Icon iconName="OpenInNewTab" color="#69f0ae" />
-        </a>
-      );
+  ];
+
+  const spColumns = [
+    {
+      key: "Title",
+      name: "Title",
+      minWidth: 10,
+      maxWidth: 300,
+      isRowHeader: true,
+      isResizable: true,
+      data: "string",
+      onRender: (event: Event) => {
+        return (
+          <TooltipHost
+            content={event.title}
+            calloutProps={{ gapSpace: 0 }}
+            styles={{ root: { display: "inline-block" } }}
+          >
+            <span
+              className={`${styles.cursor} ${
+                eventId === event.event_id ? styles.active : ""
+              }`}
+              onClick={() => clickMarker(event.event_id, dispatch)}
+            >
+              {event.title}
+            </span>
+          </TooltipHost>
+        );
+      },
+      isPadded: true
+    },
+    {
+      key: "参加者",
+      name: "参加者",
+      minWidth: 60,
+      maxWidth: 60,
+      isResizable: true,
+      isCollapsible: true,
+      data: "string",
+      isSorted: sort === "asc" || sort === "desc",
+      isSortedDescending: sort === "asc",
+      onColumnClick: sortByNumberOfPeople({ dispatch, events, sort, setSort }),
+      onRender: (event: Event) => {
+        return (
+          <TooltipHost
+            content={`${event.accepted}/${event.limit}`}
+            calloutProps={{ gapSpace: 0 }}
+            styles={{ root: { display: "inline-block" } }}
+          >
+            <span
+              className={`${styles.cursor} ${
+                eventId === event.event_id ? styles.active : ""
+              }`}
+              onClick={() => clickMarker(event.event_id, dispatch)}
+            >
+              {`${event.accepted}/${event.limit}`}
+            </span>
+          </TooltipHost>
+        );
+      }
+    },
+    {
+      key: "詳細",
+      name: "詳細",
+      minWidth: 30,
+      maxWidth: 30,
+      isResizable: true,
+      isCollapsible: true,
+      data: "string",
+      onRender: (event: Event) => {
+        return (
+          <a
+            style={{ outline: 0 }}
+            href={event.event_url}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <Icon iconName="OpenInNewTab" color="#69f0ae" />
+          </a>
+        );
+      }
     }
+  ];
+
+  const isSP = width < 740;
+
+  if (isSP) {
+    return spColumns;
   }
-];
+
+  return pcColumns;
+};
 
 const sortByNumberOfPeople = ({
   dispatch,

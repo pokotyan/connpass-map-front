@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import * as connpassActions from "../../../../actions/connpass";
 import styles from "./style.module.scss";
 import { AppState } from "../../../../reducers";
+import { useWindowDimensions } from "../../../../utils/hooks";
 
 const DAY_OF_WEEK: {
   [k: string]: string;
@@ -61,6 +62,8 @@ const DayPickerStrings: IDatePickerStrings = {
 export default () => {
   const dispatch = useDispatch();
   const date = useSelector((state: AppState) => state.connpass.search.date);
+  const { width } = useWindowDimensions();
+  const isSP = width < 740;
 
   return (
     <div className={styles.picker}>
@@ -70,7 +73,8 @@ export default () => {
         strings={DayPickerStrings}
         placeholder="日付"
         formatDate={date => {
-          const formatedDate = dayjs(date!).format("YYYY年MM月DD日d");
+          const formatRule = isSP ? "MM月DD日d" : "YYYY年MM月DD日d";
+          const formatedDate = dayjs(date!).format(formatRule);
           const dayOfWeek = formatedDate.slice(-1);
 
           return `${formatedDate.slice(0, -1)}(${DAY_OF_WEEK[dayOfWeek]})`;
