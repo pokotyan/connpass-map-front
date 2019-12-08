@@ -1,3 +1,5 @@
+$small: 740px;
+
 .marker {
   width: 30px;
   font-size: 30px;
@@ -11,5 +13,11 @@
     color: #263238;
     font-size: 30px;
     font-weight: bold;
+  }
+}
+
+@media (max-width: $small) {
+  .card {
+    width: 60vw;
   }
 }
