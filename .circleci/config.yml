@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   aws-s3: circleci/aws-s3@1.0.11
+  puppeteer: threetreeslight/puppeteer@0.1.2
 executors:
   default:
     docker:
